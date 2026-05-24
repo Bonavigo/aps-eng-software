@@ -3,9 +3,9 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
-.venv_test/
 .env
 dist/
 build/
 prompt_agente_CLI_emergia.txt
+explicacao.txt
 *.egg-info/

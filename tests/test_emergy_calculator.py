@@ -49,8 +49,29 @@ def test_calculo_evita_dupla_contagem():
 
 
 def test_threshold_elimina_caminhos_insignificantes():
-    resultado = EmergiaCalculator().calcular(_grafo_simples(), threshold=999999)
+    resultado = EmergiaCalculator().calcular(_grafo_simples(), threshold=5_000_000)
     assert resultado["emergia_total"] == 0
+
+
+def test_soma_caminhos_alternativos_por_fonte():
+    dados = {
+        "processos": [
+            {"processo_id": "F1", "nome": "Fonte", "tipo": "fonte"},
+            {"processo_id": "A1", "nome": "A", "tipo": "processo"},
+            {"processo_id": "B1", "nome": "B", "tipo": "processo"},
+            {"processo_id": "P1", "nome": "Produto", "tipo": "produto_final"},
+        ],
+        "fluxos": [
+            {"origem": "F1", "destino": "A1", "quantidade": 7, "unidade": "J"},
+            {"origem": "F1", "destino": "B1", "quantidade": 3, "unidade": "J"},
+            {"origem": "A1", "destino": "P1", "quantidade": 1, "unidade": "J"},
+            {"origem": "B1", "destino": "P1", "quantidade": 1, "unidade": "J"},
+        ],
+    }
+    grafo = GraphBuilder().construir_grafo(dados, {"F1": 100})
+    resultado = EmergiaCalculator().calcular(grafo, threshold=0.1)
+    assert resultado["emergia_total"] == 1000
+    assert resultado["contribuicoes"]["F1"]["emergia"] == 1000
 
 
 def test_deteccao_de_ciclo():
@@ -69,4 +90,3 @@ def test_deteccao_de_ciclo():
     grafo = GraphBuilder().construir_grafo(dados, {"F1": 48000})
     resultado = EmergiaCalculator().calcular(grafo, threshold=0.1)
     assert resultado["caminhos_explorados"] >= 0
-
