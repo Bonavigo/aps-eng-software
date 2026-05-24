@@ -1,0 +1,28 @@
+processo_id,nome,tipo
+F1,Energia Solar Direta,fonte
+F2,Energia Eolica,fonte
+F3,Agua de Rio,fonte
+F4,Gas Natural,fonte
+P1,Usina Solar Fotovoltaica,intermediario
+P2,Parque Eolico,intermediario
+P3,Estacao de Bombeamento,intermediario
+P4,Rede de Distribuicao Eletrica,intermediario
+P5,Sistema de Pressurizacao,intermediario
+P6,Central de Cogeracao,intermediario
+PD1,Eletricidade Distribuida,produto
+PD2,Agua Pressurizada,produto
+
+origem,destino,quantidade,unidade
+F1,P1,8000000,J
+F2,P2,3000000,J
+F3,P3,5000,L
+F4,P6,120000,J
+P1,P4,2000000,J
+P2,P4,900000,J
+P3,P5,4500,L
+P4,P6,1500000,J
+P5,P6,2000,L
+P4,PD1,1,MWh
+P6,PD1,0.5,MWh
+P5,PD2,1,m3
+P6,PD2,0.5,m3

@@ -1,0 +1,6 @@
+processo_id,nome,tipo
+F1,Energia Solar,fonte
+PD1,Biomassa Primaria,produto
+
+origem,destino,quantidade,unidade
+F1,PD1,1000000,J

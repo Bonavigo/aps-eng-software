@@ -1,0 +1,10 @@
+processo_id,nome,tipo
+F1,Radiacao Solar,fonte
+F2,Agua da Chuva,fonte
+P1,Processo Fotossintetico,intermediario
+PD1,Biomassa Vegetal,produto
+
+origem,destino,quantidade,unidade
+F1,P1,5000000,J
+F2,P1,800,g
+P1,PD1,1,kg

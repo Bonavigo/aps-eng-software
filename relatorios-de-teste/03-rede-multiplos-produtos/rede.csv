@@ -1,0 +1,16 @@
+processo_id,nome,tipo
+F1,Gas Natural,fonte
+F2,Energia Eletrica,fonte
+F3,Agua de Rio,fonte
+P1,Reator de Combustao,intermediario
+P2,Sistema de Filtragem,intermediario
+PD1,Calor Industrial,produto
+PD2,Agua Purificada,produto
+
+origem,destino,quantidade,unidade
+F1,P1,200000,J
+F2,P1,50000,J
+F3,P2,1000,L
+F2,P2,10000,J
+P1,PD1,1,MJ
+P2,PD2,1,m3
