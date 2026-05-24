@@ -1,0 +1,14 @@
+processo_id,nome,tipo
+F1,Energia Geotermica,fonte
+F2,Energia Maremotriz,fonte
+P1,Turbina Geotermica,intermediario
+P2,Turbina Maremotriz,intermediario
+P3,Conversor de Tensao,intermediario
+PD1,Eletricidade de Baixo Impacto,produto
+
+origem,destino,quantidade,unidade
+F1,P1,900000,J
+F2,P2,1200000,J
+P1,P3,700000,J
+P2,P3,900000,J
+P3,PD1,1,MWh
