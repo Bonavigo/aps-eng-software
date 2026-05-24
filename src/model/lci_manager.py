@@ -20,7 +20,8 @@ class LCIManager:
 
     def carregar_csv(self, caminho: str) -> dict[str, list[dict[str, Any]]]:
         """Lê um arquivo CSV com seções de processos, fluxos e UEVs."""
-        texto = Path(caminho).read_text(encoding="utf-8-sig")
+        arquivo = self._resolver_arquivo_entrada(caminho, "CSV de entrada")
+        texto = arquivo.read_text(encoding="utf-8-sig")
         blocos = [bloco.strip() for bloco in texto.split("\n\n") if bloco.strip()]
         if len(blocos) < 2:
             raise LCIError("CSV inválido: esperado ao menos seções de processos e fluxos.")
@@ -39,7 +40,8 @@ class LCIManager:
 
     def carregar_uevs(self, caminho: str) -> dict[str, float]:
         """Lê UEVs a partir de um JSON."""
-        dados = json.loads(Path(caminho).read_text(encoding="utf-8"))
+        arquivo = self._resolver_arquivo_entrada(caminho, "JSON de UEVs")
+        dados = json.loads(arquivo.read_text(encoding="utf-8"))
         fontes = dados.get("fontes", [])
         uevs: dict[str, float] = {}
         for fonte in fontes:
@@ -73,3 +75,21 @@ class LCIManager:
                 raise LCIError("Fluxo inválido: quantidade deve ser positiva.")
         return True
 
+    def _resolver_arquivo_entrada(self, caminho: str, descricao: str) -> Path:
+        """Valida o caminho de entrada para evitar abrir diretórios como arquivo.
+
+        Args:
+            caminho: Caminho informado pelo usuário.
+            descricao: Texto usado na mensagem de erro.
+
+        Returns:
+            Caminho validado para um arquivo existente.
+        """
+        arquivo = Path(str(caminho).strip())
+        if not str(caminho).strip():
+            raise LCIError(f"{descricao} inválido: caminho vazio.")
+        if str(arquivo) in {".", "./", ".\\"} or arquivo.is_dir():
+            raise LCIError(f"{descricao} inválido: '{caminho}' aponta para uma pasta, não um arquivo.")
+        if not arquivo.exists():
+            raise LCIError(f"{descricao} não encontrado: {caminho}")
+        return arquivo

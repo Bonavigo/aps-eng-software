@@ -1,0 +1,6 @@
+{
+  "fontes": [
+    {"id": "F1", "nome": "Energia Solar", "uev": 1.0, "unidade": "sej/J"},
+    {"id": "F2", "nome": "Gas Natural", "uev": 48000, "unidade": "sej/J"}
+  ]
+}

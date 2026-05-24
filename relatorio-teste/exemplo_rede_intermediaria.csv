@@ -1,0 +1,17 @@
+processo_id,nome,tipo
+F1,Energia_Solar,fonte
+F2,Gas_Natural,fonte
+P1,Geracao_Eletrica,processo
+P2,Producao_Cimento,processo
+P3,Produto_Final,produto_final
+
+origem,destino,quantidade,unidade
+F1,P1,1000,J
+F2,P1,500,J
+P1,P2,300,J
+P1,P3,200,J
+P2,P3,150,kg
+
+fonte_id,uev,unidade_uev
+F1,1.0,sej/J
+F2,48000,sej/J

@@ -31,3 +31,7 @@ def test_validar_dados_com_fluxo_para_no_inexistente():
             }
         )
 
+
+def test_carregar_csv_rejeita_caminho_de_pasta():
+    with pytest.raises(LCIError):
+        LCIManager().carregar_csv(".")
