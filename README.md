@@ -1,5 +1,7 @@
 # SCALE - Emergy APS
 
+Aplicação desktop em Python para importação de redes LCI, cálculo de emergia, visualização dos resultados e exportação de relatórios em CSV, PDF e PNG.
+
 ## Visão Geral
 
 - Importa arquivos CSV com processos e fluxos.
