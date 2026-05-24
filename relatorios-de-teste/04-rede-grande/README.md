@@ -29,7 +29,7 @@ Exercitar a execução em uma rede mais complexa, com várias camadas de interme
 
 ## Como usar
 
-1. Abra o programa SCALE - Emergy APS.
+1. Abra o programa EmerCalc.
 2. Selecione este diretório como espaço de trabalho.
 3. Carregue `rede.csv` e `uevs.json`.
 4. Execute o cálculo para validar a navegação em rede grande.

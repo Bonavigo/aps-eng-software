@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import queue
 from pathlib import Path
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 
 import customtkinter as ctk
 
@@ -23,8 +23,11 @@ class MainWindow(ctk.CTk):
     def __init__(self, controller) -> None:
         super().__init__()
         self.controller = controller
-        self.title("SCALE - Emergy APS")
-        self.geometry("900x600")
+        self._largura_janela = 900
+        self._altura_janela = 600
+        self.title("EmerCalc")
+        self.geometry(f"{self._largura_janela}x{self._altura_janela}")
+        self.minsize(self._largura_janela, self._altura_janela)
         self.workspace_var = ctk.StringVar()
         self.graph_var = ctk.StringVar()
         self.uev_var = ctk.StringVar()
@@ -35,6 +38,7 @@ class MainWindow(ctk.CTk):
         self._itens_workspace: list[ctk.CTkLabel] = []
         self._item_workspace_selecionado: ctk.CTkLabel | None = None
         self._build()
+        self.after_idle(self._centralizar_janela)
         self.after(100, self._processar_filas)
 
     def _build(self) -> None:
@@ -43,15 +47,12 @@ class MainWindow(ctk.CTk):
 
         barra = ctk.CTkFrame(self)
         barra.grid(row=0, column=0, sticky="ew", padx=12, pady=(12, 6))
-        barra.grid_columnconfigure(3, weight=1)
-        ctk.CTkButton(barra, text="Início", command=lambda: self._log("Início selecionado.")).grid(
+        barra.grid_columnconfigure(2, weight=1)
+        ctk.CTkButton(barra, text="Tutorial", command=lambda: TutorialWindow(self)).grid(
             row=0, column=0, padx=(0, 8), pady=8
         )
-        ctk.CTkButton(barra, text="Tutorial", command=lambda: TutorialWindow(self)).grid(
-            row=0, column=1, padx=(0, 8), pady=8
-        )
         ctk.CTkButton(barra, text="Sobre", command=lambda: AboutWindow(self)).grid(
-            row=0, column=2, padx=(0, 8), pady=8
+            row=0, column=1, padx=(0, 8), pady=8
         )
 
         top = ctk.CTkFrame(self)
@@ -130,6 +131,16 @@ class MainWindow(ctk.CTk):
         self.log.grid(row=6, column=0, sticky="nsew", padx=8, pady=(0, 8))
         aba.grid_rowconfigure(6, weight=1)
         self.log.configure(state="disabled")
+
+    def _centralizar_janela(self) -> None:
+        self.update_idletasks()
+        largura = self._largura_janela
+        altura = self._altura_janela
+        tela_largura = self.winfo_screenwidth()
+        tela_altura = self.winfo_screenheight()
+        x = max(0, (tela_largura - largura) // 2)
+        y = max(0, (tela_altura - altura) // 2)
+        self.geometry(f"{largura}x{altura}+{x}+{y}")
 
     def _selecionar_workspace(self) -> None:
         caminho = filedialog.askdirectory()

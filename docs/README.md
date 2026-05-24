@@ -1,4 +1,4 @@
-# Documentação técnica
+# Documentação técnica - EmerCalc
 
 ## Escopo
 Sistema em Python para cálculo de emergia com importação de LCI, cálculo por backtracking e interface gráfica.

@@ -30,7 +30,7 @@ Testar a acumulação de emergia a partir de duas fontes distintas que alimentam
 
 ## Como usar
 
-1. Abra o programa SCALE - Emergy APS.
+1. Abra o programa EmerCalc.
 2. Selecione este diretório como espaço de trabalho.
 3. Carregue `rede.csv` e `uevs.json`.
 4. Execute o cálculo e confirme a distribuição entre as duas fontes.

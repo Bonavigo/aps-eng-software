@@ -27,7 +27,7 @@ Exercitar o mecanismo de prevenção de dupla contagem em uma rede com convergê
 
 ## Como usar
 
-1. Abra o programa SCALE - Emergy APS.
+1. Abra o programa EmerCalc.
 2. Selecione este diretório como espaço de trabalho.
 3. Carregue `rede.csv` e `uevs.json`.
 4. Execute o cálculo e verifique a ausência de duplicações na saída.

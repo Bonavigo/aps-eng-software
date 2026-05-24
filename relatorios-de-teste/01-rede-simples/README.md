@@ -24,7 +24,7 @@ Validar o caso mínimo do programa, com uma única fonte ligada diretamente a um
 
 ## Como usar
 
-1. Abra o programa SCALE - Emergy APS.
+1. Abra o programa EmerCalc.
 2. Selecione este diretório como espaço de trabalho.
 3. Carregue `rede.csv` e `uevs.json`.
 4. Clique em `Iniciar Cálculo` para executar o teste.

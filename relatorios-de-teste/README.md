@@ -1,4 +1,4 @@
-# Dados de exemplo
+# Cenários de teste - EmerCalc
 
 Arquivos de exemplo para testar importação, construção do grafo e cálculo de emergia.
 

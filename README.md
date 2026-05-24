@@ -1,4 +1,4 @@
-# SCALE - Emergy APS
+# EmerCalc
 
 Aplicação desktop em Python para importação de redes LCI, cálculo de emergia, visualização dos resultados e exportação de relatórios em CSV, PDF e PNG.
 
@@ -90,10 +90,8 @@ Cada pasta contém:
 - `src/controller`: coordenação do fluxo
 - `src/utils`: exportação de resultados
 - `data`: exemplos e documentação dos dados
-- `relatorios-de-teste`: cenários de teste manuais
-- `tests`: testes automatizados
-- `data`: arquivos de exemplo e documentação dos dados
 - `relatorios-de-teste`: cenários completos para validação manual
+- `tests`: testes automatizados
 
 ## Fluxo da Aplicação
 
@@ -116,13 +114,6 @@ Cada pasta contém:
 - ODUM, Howard T. *Environmental Accounting: Emergy and Environmental Decision Making*. 1996.
 - MARVUGLIA, Antonino et al. *SCALE: Software for CALculating Emergy based on Life Cycle Inventories*. 2013.
 - ARBAULT, Damien et al. *Emergy evaluation using the calculation software SCALE*. 2014.
-
-## Observações Sobre o Cálculo
-
-- O programa identifica fontes e produtos pelos atributos de tipo do grafo.
-- As arestas recebem frações normalizadas a partir da soma dos fluxos de saída.
-- Caminhos são explorados com controle de ciclos e limiar de propagação.
-- O resultado final mostra emergia total, contribuição por fonte, caminho explorado e métricas de perda.
 
 ## Integrantes
 

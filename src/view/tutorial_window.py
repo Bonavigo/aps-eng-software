@@ -9,7 +9,7 @@ import customtkinter as ctk
 
 TEXTO_TUTORIAL = textwrap.dedent(
     """
-    SCALE - EMERGY APS
+    EmerCalc
     Sistema de Cálculo de Emergia para Redes LCI
     ------------------------------------------------------------
 
@@ -171,8 +171,29 @@ class TutorialWindow(ctk.CTkToplevel):
 
     def __init__(self, master=None) -> None:
         super().__init__(master)
-        self.title("Tutorial")
+        self.title("Tutorial - EmerCalc")
+        self.geometry("980x760")
+        self.transient(master)
+        self.after_idle(self._centralizar_janela)
         texto = ctk.CTkTextbox(self, wrap="word")
         texto.insert("end", TEXTO_TUTORIAL)
         texto.configure(state="disabled")
         texto.pack(fill="both", expand=True, padx=8, pady=8)
+
+    def _centralizar_janela(self) -> None:
+        self.update_idletasks()
+        largura = self.winfo_width()
+        altura = self.winfo_height()
+        if self.master is not None:
+            master_x = self.master.winfo_rootx()
+            master_y = self.master.winfo_rooty()
+            master_largura = self.master.winfo_width()
+            master_altura = self.master.winfo_height()
+            x = max(0, master_x + (master_largura - largura) // 2)
+            y = max(0, master_y + (master_altura - altura) // 2)
+        else:
+            tela_largura = self.winfo_screenwidth()
+            tela_altura = self.winfo_screenheight()
+            x = max(0, (tela_largura - largura) // 2)
+            y = max(0, (tela_altura - altura) // 2)
+        self.geometry(f"{largura}x{altura}+{x}+{y}")

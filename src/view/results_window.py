@@ -14,8 +14,10 @@ class ResultsWindow(ctk.CTkToplevel):
 
     def __init__(self, master=None, resultados=None) -> None:
         super().__init__(master)
-        self.title("Resultados")
-        self.geometry("900x600")
+        self.title("Resultados - EmerCalc")
+        self.geometry("1000x720")
+        self.transient(master)
+        self.after_idle(self._centralizar_janela)
 
         container = ctk.CTkFrame(self)
         container.pack(fill="both", expand=True, padx=12, pady=12)
@@ -71,3 +73,21 @@ class ResultsWindow(ctk.CTkToplevel):
         canvas = FigureCanvasTkAgg(fig, master=grafico_frame)
         canvas.draw()
         canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
+
+    def _centralizar_janela(self) -> None:
+        self.update_idletasks()
+        largura = self.winfo_width()
+        altura = self.winfo_height()
+        if self.master is not None:
+            master_x = self.master.winfo_rootx()
+            master_y = self.master.winfo_rooty()
+            master_largura = self.master.winfo_width()
+            master_altura = self.master.winfo_height()
+            x = max(0, master_x + (master_largura - largura) // 2)
+            y = max(0, master_y + (master_altura - altura) // 2)
+        else:
+            tela_largura = self.winfo_screenwidth()
+            tela_altura = self.winfo_screenheight()
+            x = max(0, (tela_largura - largura) // 2)
+            y = max(0, (tela_altura - altura) // 2)
+        self.geometry(f"{largura}x{altura}+{x}+{y}")
