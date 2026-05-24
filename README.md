@@ -61,9 +61,6 @@ Para validar todo o fluxo de cálculo com os cenários de exemplo, você também
 
 ## Dados de Exemplo
 
-- `data/exemplos/exemplo_rede_simples.csv`
-- `data/exemplos/exemplo_rede_intermediaria.csv`
-- `data/exemplos/exemplo_uevs.json`
 - `relatorios-de-teste/01-rede-simples/`
 - `relatorios-de-teste/02-rede-solar-biomassa/`
 - `relatorios-de-teste/03-rede-multiplos-produtos/`
