@@ -1,6 +1,10 @@
-fotos-como-usar/
-build/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.venv_test/
+.env
 dist/
-app.spec
-Compilador-de-Livros.spec
-modulos/__pycache__
+build/
+*.egg-info/

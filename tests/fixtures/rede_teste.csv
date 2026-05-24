@@ -1,0 +1,12 @@
+processo_id,nome,tipo
+F1,Energia_Solar,fonte
+A1,Processo_A,processo
+P1,Produto_Final,produto_final
+
+origem,destino,quantidade,unidade
+F1,A1,100,J
+A1,P1,1,J
+
+fonte_id,uev,unidade_uev
+F1,48000,sej/J
+
