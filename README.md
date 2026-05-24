@@ -1,16 +1,34 @@
-# Sistema de Cálculo de Emergia
+# SCALE - Emergy APS
 
-Projeto da APS de Engenharia de Software para importação de LCI, cálculo de emergia, geração de relatórios e interface gráfica em Tkinter.
+Aplicação desktop em Python para importação de redes LCI, cálculo de emergia, visualização dos resultados e exportação de relatórios em CSV, PDF e PNG.
 
-## Como rodar
+## Visão Geral
 
-Use o Python 3.13 instalado no seu usuário:
+- Importa arquivos CSV com processos e fluxos.
+- Importa arquivos JSON com UEVs das fontes.
+- Constrói o grafo da rede LCI.
+- Calcula a emergia por fonte e o total do produto.
+- Exibe os resultados em interface gráfica.
+- Exporta relatórios e imagens do grafo.
+- Inclui cenários de teste completos em `relatorios-de-teste/`.
+
+## Requisitos
+
+- Python 3.13
+- `customtkinter`
+- `matplotlib`
+- `reportlab`
+- `networkx` opcional, com fallback interno quando indisponível
+
+## Como Rodar
+
+Use o Python instalado na conta do usuário da máquina:
 
 ```powershell
-& "C:\Users\bbona\AppData\Local\Programs\Python\Python313\python.exe" main.py
+& "C:\Users\SEU_USUARIO\AppData\Local\Programs\Python\Python313\python.exe" main.py
 ```
 
-## Execução
+Se preferir, execute diretamente no ambiente ativo:
 
 ```bash
 python main.py
@@ -18,24 +36,70 @@ python main.py
 
 ## Testes
 
+Execute a suíte automatizada com:
+
 ```bash
 pytest tests/
 ```
 
+Para validar todo o fluxo de cálculo com os cenários de exemplo, você também pode usar os arquivos em `data/exemplos/` e `relatorios-de-teste/`.
+
+## Como Usar
+
+1. Abra a aplicação.
+2. Selecione um workspace com arquivos de entrada.
+3. Preencha o arquivo CSV da rede e o JSON de UEVs.
+4. Ajuste o limiar de propagação, se necessário.
+5. Clique em `Iniciar Cálculo`.
+6. Veja a janela de resultados e exporte o que precisar.
+
 ## Dados de Exemplo
 
 - `data/exemplos/exemplo_rede_simples.csv`
+- `data/exemplos/exemplo_rede_intermediaria.csv`
 - `data/exemplos/exemplo_uevs.json`
 
-Você pode selecionar esses arquivos diretamente na GUI depois de escolher um workspace.
+## Cenários de Validação
 
-## Estrutura
+Os cenários completos de teste ficam em `relatorios-de-teste/`:
+
+- `01-rede-simples`
+- `02-rede-solar-biomassa`
+- `03-rede-multiplos-produtos`
+- `04-rede-grande`
+- `05-rede-com-convergencia`
+
+Cada pasta contém:
+
+- `rede.csv`
+- `uevs.json`
+- `README.md`
+
+## Estrutura do Projeto
 
 - `src/model`: importação, grafo e cálculo
-- `src/view`: telas da aplicação
+- `src/view`: janelas da interface
 - `src/controller`: coordenação do fluxo
-- `src/utils`: exportações
+- `src/utils`: exportação de resultados
+- `data`: exemplos e documentação dos dados
+- `relatorios-de-teste`: cenários de teste manuais
 - `tests`: testes automatizados
+
+## Fluxo da Aplicação
+
+1. O CSV é lido e validado.
+2. O JSON de UEVs é carregado.
+3. O grafo é construído com os nós e fluxos.
+4. O cálculo percorre os caminhos válidos entre fontes e produtos.
+5. O resultado é exibido na interface.
+6. O usuário pode exportar CSV, PDF ou PNG.
+
+## Observações Sobre o Cálculo
+
+- Fontes e produtos são identificados pelos atributos do grafo.
+- As arestas são normalizadas por frações de saída.
+- Caminhos repetidos e ciclos são tratados durante a exploração.
+- O resultado final inclui emergia total, contribuição por fonte e métricas de perda.
 
 ## Referências
 
@@ -45,5 +109,7 @@ Você pode selecionar esses arquivos diretamente na GUI depois de escolher um wo
 
 ## Integrantes
 
-- `NOME_ALUNO_1`
-- `NOME_ALUNO_2`
+- Bruno Bonavigo
+- Lucas Vergara
+- Helen Silva
+- Vitor Oliveira
