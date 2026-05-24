@@ -7,4 +7,5 @@ venv/
 .env
 dist/
 build/
+prompt_agente_CLI_emergia.txt
 *.egg-info/

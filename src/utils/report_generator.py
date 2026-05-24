@@ -29,7 +29,8 @@ class ReportGenerator:
 
     def exportar_csv(self, resultados: dict[str, Any], caminho: str) -> None:
         """Escreve um CSV simples com as contribuições."""
-        with Path(caminho).open("w", newline="", encoding="utf-8") as arquivo:
+        destino = self._resolver_destino(caminho, "resultado_emergia.csv")
+        with destino.open("w", newline="", encoding="utf-8") as arquivo:
             writer = csv.writer(arquivo)
             writer.writerow(["Processo", "Emergia (sej)", "% Contribuição"])
             for processo, dados in resultados.get("contribuicoes", {}).items():
@@ -37,7 +38,8 @@ class ReportGenerator:
 
     def exportar_pdf(self, resultados: dict[str, Any], caminho: str) -> None:
         """Gera um PDF com tabela, gráfico e sumário."""
-        doc = SimpleDocTemplate(caminho, pagesize=A4)
+        destino = self._resolver_destino(caminho, "relatorio_emergia.pdf")
+        doc = SimpleDocTemplate(str(destino), pagesize=A4)
         styles = getSampleStyleSheet()
         story = [
             Paragraph("Relatório de Emergia", styles["Title"]),
@@ -71,6 +73,7 @@ class ReportGenerator:
         """Exporta o grafo de processos como PNG."""
         if grafo is None:
             raise ValueError("Grafo ausente para exportação PNG.")
+        destino = self._resolver_destino(caminho, "grafo_emergia.png")
         fig, ax = plt.subplots(figsize=(10, 7), constrained_layout=True)
         pos = nx.spring_layout(grafo, seed=42) if nx else None
         if nx:
@@ -79,7 +82,7 @@ class ReportGenerator:
                 tipo = attrs.get("tipo", "processo")
                 cores.append({"fonte": "#2e7d32", "produto_final": "#c62828"}.get(tipo, "#1565c0"))
             nx.draw(grafo, pos, ax=ax, with_labels=True, node_color=cores, node_size=1200, font_size=8, arrows=True)
-        fig.savefig(caminho, dpi=150)
+        fig.savefig(destino, dpi=150)
         plt.close(fig)
 
     def _imagem_contribuicao(self, resultados: dict[str, Any]) -> Image:
@@ -97,3 +100,28 @@ class ReportGenerator:
         plt.close(fig)
         buffer.seek(0)
         return Image(buffer, width=400, height=180)
+
+    def _resolver_destino(self, caminho: str, nome_padrao: str) -> Path:
+        """Normaliza o caminho de saída para sempre apontar para um arquivo.
+
+        Args:
+            caminho: Caminho informado pelo usuário.
+            nome_padrao: Nome usado quando `caminho` for um diretório ou `.`.
+
+        Returns:
+            Caminho absoluto ou relativo de um arquivo válido.
+        """
+        texto = str(caminho).strip()
+        destino = Path(texto) if texto else Path.cwd() / nome_padrao
+
+        if texto in {".", "./", ".\\"}:
+            destino = Path.cwd() / nome_padrao
+        elif destino.exists() and destino.is_dir():
+            destino = destino / nome_padrao
+        elif not destino.suffix:
+            # Se o usuário passou um nome sem extensão, assume o arquivo alvo
+            # e completa a extensão apropriada com base no padrão.
+            destino = destino.with_name(destino.name or nome_padrao)
+
+        destino.parent.mkdir(parents=True, exist_ok=True)
+        return destino
