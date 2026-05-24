@@ -11,30 +11,57 @@ class AboutWindow(ctk.CTkToplevel):
     def __init__(self, master=None) -> None:
         super().__init__(master)
         self.title("Sobre - EmerCalc")
-        self.geometry("560x320")
+        self.geometry("620x420")
         self.transient(master)
         self.after_idle(self._centralizar_janela)
 
         container = ctk.CTkFrame(self)
         container.pack(fill="both", expand=True, padx=12, pady=12)
+        container.grid_columnconfigure(0, weight=1)
 
         ctk.CTkLabel(
             container,
             text="EmerCalc",
-            font=ctk.CTkFont(size=20, weight="bold"),
-        ).pack(anchor="w", padx=12, pady=(12, 4))
+            font=ctk.CTkFont(size=22, weight="bold"),
+        ).grid(row=0, column=0, sticky="w", padx=12, pady=(12, 4))
         ctk.CTkLabel(
             container,
-            text="Sistema de cálculo de emergia para redes LCI",
+            text="Sistema de cálculo de emergia para redes LCI.",
             font=ctk.CTkFont(size=14),
-        ).pack(anchor="w", padx=12, pady=4)
+        ).grid(row=1, column=0, sticky="w", padx=12, pady=4)
         ctk.CTkLabel(
             container,
-            text="Referências: Odum, Marvuglia et al.",
+            text="Disciplina: Engenharia de Software",
+            anchor="w",
+            justify="left",
+        ).grid(row=2, column=0, sticky="w", padx=12, pady=(8, 2))
+        ctk.CTkLabel(
+            container,
+            text="Curso: Análise e Desenvolvimento de Sistemas",
+            anchor="w",
+            justify="left",
+        ).grid(row=3, column=0, sticky="w", padx=12, pady=2)
+        ctk.CTkLabel(
+            container,
+            text="Instituição: Projeto acadêmico APS",
+            anchor="w",
+            justify="left",
+        ).grid(row=4, column=0, sticky="w", padx=12, pady=2)
+
+        referencia = (
+            "Referência ABNT:\n"
+            "ODUM, Howard T. Environmental Accounting: Emergy and Environmental Decision Making. "
+            "New York: John Wiley & Sons, 1996.\n"
+            "MARVUGLIA, Antonino et al. SCALE: Software for CALculating Emergy based on Life Cycle Inventories. 2013.\n"
+            "ARBAULT, Damien et al. Emergy evaluation using the calculation software SCALE. 2014."
+        )
+        ctk.CTkLabel(
+            container,
+            text=referencia,
             justify="left",
             anchor="w",
-            wraplength=360,
-        ).pack(anchor="w", padx=12, pady=(4, 12))
+            wraplength=560,
+        ).grid(row=5, column=0, sticky="w", padx=12, pady=(10, 12))
 
     def _centralizar_janela(self) -> None:
         self.update_idletasks()

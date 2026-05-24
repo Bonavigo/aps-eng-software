@@ -172,7 +172,7 @@ class TutorialWindow(ctk.CTkToplevel):
     def __init__(self, master=None) -> None:
         super().__init__(master)
         self.title("Tutorial - EmerCalc")
-        self.geometry("980x760")
+        self.geometry("1000x780")
         self.transient(master)
         self.after_idle(self._centralizar_janela)
         texto = ctk.CTkTextbox(self, wrap="word")
