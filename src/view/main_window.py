@@ -19,7 +19,7 @@ ctk.set_default_color_theme("blue")
 
 
 class MainWindow(ctk.CTk):
-    """Janela principal da aplicação EmerCalc."""
+    """Janela principal."""
 
     def __init__(self, controller) -> None:
         super().__init__()
@@ -76,16 +76,13 @@ class MainWindow(ctk.CTk):
 
         barra = ctk.CTkFrame(self)
         barra.grid(row=1, column=0, sticky="ew", padx=12, pady=(0, 6))
-        for coluna in range(3):
+        for coluna in range(2):
             barra.grid_columnconfigure(coluna, weight=1)
-        ctk.CTkButton(barra, text="Início", command=self._ir_para_inicio).grid(
+        ctk.CTkButton(barra, text="Tutorial", command=self._abrir_tutorial).grid(
             row=0, column=0, padx=(8, 4), pady=8, sticky="ew"
         )
-        ctk.CTkButton(barra, text="Tutorial", command=self._abrir_tutorial).grid(
-            row=0, column=1, padx=4, pady=8, sticky="ew"
-        )
         ctk.CTkButton(barra, text="Sobre", command=self._abrir_sobre).grid(
-            row=0, column=2, padx=(4, 8), pady=8, sticky="ew"
+            row=0, column=1, padx=(4, 8), pady=8, sticky="ew"
         )
 
         workspace = ctk.CTkFrame(self)
@@ -120,16 +117,22 @@ class MainWindow(ctk.CTk):
         direita = ctk.CTkFrame(body)
         direita.grid(row=0, column=1, sticky="nsew", padx=(6, 8), pady=8)
         direita.grid_columnconfigure(0, weight=1)
-        direita.grid_rowconfigure(1, weight=1)
+        direita.grid_rowconfigure(0, weight=1)
 
         self.tabs = ctk.CTkTabview(direita)
-        self.tabs.grid(row=0, column=0, sticky="ew", padx=8, pady=(8, 4))
+        self.tabs.grid(row=0, column=0, sticky="nsew", padx=8, pady=(8, 4))
         self.tabs.add("Cálculo Completo")
         aba = self.tabs.tab("Cálculo Completo")
-        aba.grid_columnconfigure(1, weight=1)
+        aba.grid_columnconfigure(0, weight=1)
+        aba.grid_rowconfigure(0, weight=1)
+
+        conteudo = ctk.CTkScrollableFrame(aba, corner_radius=0)
+        conteudo.grid(row=0, column=0, sticky="nsew", padx=0, pady=0)
+        conteudo.grid_columnconfigure(0, weight=1)
+        conteudo.grid_rowconfigure(6, weight=1)
 
         self.entrada_grafo, self._linha_grafo = self._criar_linha_arquivo(
-            aba,
+            conteudo,
             0,
             "Arquivo de Rede (CSV)",
             self.graph_var,
@@ -138,7 +141,7 @@ class MainWindow(ctk.CTk):
             lambda: self._validar_campo_arquivo(self.entrada_grafo, ".csv"),
         )
         self.entrada_uev, self._linha_uev = self._criar_linha_arquivo(
-            aba,
+            conteudo,
             1,
             "Arquivo de UEVs (JSON)",
             self.uev_var,
@@ -147,7 +150,7 @@ class MainWindow(ctk.CTk):
             lambda: self._validar_campo_arquivo(self.entrada_uev, ".json"),
         )
 
-        linha_threshold = ctk.CTkFrame(aba)
+        linha_threshold = ctk.CTkFrame(conteudo)
         linha_threshold.grid(row=2, column=0, sticky="ew", padx=8, pady=4)
         linha_threshold.grid_columnconfigure(1, weight=1)
         ctk.CTkLabel(linha_threshold, text="Limiar de Propagação", width=180, anchor="w").grid(
@@ -165,14 +168,14 @@ class MainWindow(ctk.CTk):
         )
         self.lbl_threshold_info.grid(row=1, column=0, columnspan=2, sticky="ew", padx=(8, 8), pady=(0, 8))
 
-        self.btn_iniciar = ctk.CTkButton(aba, text="Iniciar Cálculo", command=self._calcular)
+        self.btn_iniciar = ctk.CTkButton(conteudo, text="Iniciar Cálculo", command=self._calcular)
         self.btn_iniciar.grid(row=3, column=0, sticky="ew", padx=8, pady=(12, 8))
 
-        self.progresso = ctk.CTkProgressBar(aba)
+        self.progresso = ctk.CTkProgressBar(conteudo)
         self.progresso.grid(row=4, column=0, sticky="ew", padx=8, pady=(0, 8))
         self.progresso.set(0)
 
-        botoes = ctk.CTkFrame(aba)
+        botoes = ctk.CTkFrame(conteudo)
         botoes.grid(row=5, column=0, sticky="ew", padx=8, pady=(0, 8))
         for coluna in range(3):
             botoes.grid_columnconfigure(coluna, weight=1)
@@ -189,9 +192,9 @@ class MainWindow(ctk.CTk):
         self.btn_pdf.grid(row=0, column=1, padx=4, pady=8, sticky="ew")
         self.btn_png.grid(row=0, column=2, padx=4, pady=8, sticky="ew")
 
-        self.log = ctk.CTkTextbox(aba, height=170, wrap="word")
+        self.log = ctk.CTkTextbox(conteudo, height=170, wrap="word")
         self.log.grid(row=6, column=0, sticky="nsew", padx=8, pady=(0, 8))
-        aba.grid_rowconfigure(6, weight=1)
+        conteudo.grid_rowconfigure(6, weight=1)
         self.log.configure(state="disabled")
 
     def _criar_linha_arquivo(
@@ -229,11 +232,6 @@ class MainWindow(ctk.CTk):
         x = max(0, (tela_largura - largura) // 2)
         y = max(0, (tela_altura - altura) // 2)
         self.geometry(f"{largura}x{altura}+{x}+{y}")
-
-    def _ir_para_inicio(self) -> None:
-        self.lift()
-        self.focus_force()
-        self._log("Tela inicial selecionada.")
 
     def _selecionar_workspace(self) -> None:
         caminho = filedialog.askdirectory()
